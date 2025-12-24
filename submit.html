@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Нийтлэл Илгээх | Mandri</title>
+    <title>Нийтлэл илгээх | Mandri</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,26 +14,40 @@
         </div>
     </header>
 
-    <div class="container" style="max-width: 600px;">
-        <h1>Нийтлэл илгээх</h1>
-        <p>Та өөрийн мэдээлэл, жор, эсвэл түүхийг энд бичиж илгээгээрэй.</p>
-        
-        <form style="background: #1a1d1d; padding: 30px; border-radius: 10px; margin-top: 20px;">
-            <label>Гарчиг</label>
-            <input type="text" style="width:100%; padding:10px; margin:10px 0; background:#222; border:1px solid #444; color:white;">
+    <div class="container form-container">
+        <div class="form-card">
+            <h1>✍️ Нийтлэл илгээх</h1>
+            <p>Таны илгээсэн нийтлэлийг бид хянаж үзээд сайт дээрээ нэмэх болно.</p>
             
-            <label>Ангилал</label>
-            <select style="width:100%; padding:10px; margin:10px 0; background:#222; border:1px solid #444; color:white;">
-                <option>Мэдээ</option>
-                <option>Хоолны Жор</option>
-                <option>Түүх</option>
-            </select>
+            <form action="https://formspree.io/f/ВАЙН_МЭЙЛ_ХАЯГ" method="POST">
+                <div class="input-group">
+                    <label>Таны нэр</label>
+                    <input type="text" name="author" required placeholder="Нэрээ бичнэ үү">
+                </div>
 
-            <label>Агуулга</label>
-            <textarea style="width:100%; padding:10px; margin:10px 0; background:#222; border:1px solid #444; color:white; height:150px;"></textarea>
+                <div class="input-group">
+                    <label>Нийтлэлийн гарчиг</label>
+                    <input type="text" name="title" required placeholder="Гарчиг...">
+                </div>
+                
+                <div class="input-group">
+                    <label>Ангилал</label>
+                    <select name="category">
+                        <option value="news">Мэдээ</option>
+                        <option value="recipe">Хоолны Жор</option>
+                        <option value="history">Түүх</option>
+                        <option value="tech">Технологи</option>
+                    </select>
+                </div>
 
-            <button type="button" onclick="alert('Амжилттай илгээгдлээ!')" style="width:100%; padding:12px; background:#ff4757; border:none; color:white; font-weight:bold; cursor:pointer;">Илгээх</button>
-        </form>
+                <div class="input-group">
+                    <label>Нийтлэлийн агуулга</label>
+                    <textarea name="message" rows="8" required placeholder="Текстээ энд бичнэ үү..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn-full">Илгээх (Post It)</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

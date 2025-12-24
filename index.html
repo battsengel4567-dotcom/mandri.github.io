@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mandri Blog | Мэдээ • Жор • Түүх</title>
+    <title>Mandri Blog | Ирээдүйг хамтдаа</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
         <div class="nav-container">
             <div class="logo">Mandri<span>Blog</span></div>
             <nav>
-                <a href="index.html" class="active">Нүүр</a>
-                <a href="about.html">Тухай</a>
-                <a href="submit.html" class="btn-submit">+ Нийтлэл</a>
+                <a href="index.html" class="active"><i class="fas fa-home"></i> Нүүр</a>
+                <a href="submit.html" class="btn-submit"><i class="fas fa-plus-circle"></i> Нийтлэл бичих</a>
             </nav>
         </div>
     </header>
 
     <div class="container">
         <div class="categories">
-            <span class="tag">Бүгд</span>
-            <span class="tag">Мэдээ</span>
-            <span class="tag">Хоолны Жор</span>
-            <span class="tag">Түүх</span>
+            <button class="tag active">Бүгд</button>
+            <button class="tag">Мэдээ</button>
+            <button class="tag">Хоолны Жор</button>
+            <button class="tag">Түүх</button>
+            <button class="tag">Технологи</button>
         </div>
 
         <main class="post-grid">
@@ -31,9 +32,12 @@
                 <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500');"></div>
                 <div class="card-content">
                     <span class="badge recipe">Хоолны Жор</span>
-                    <h2>Гэртээ хийх амттай пицца</h2>
-                    <p>Ердөө 15 минутын дотор хамгийн амттай пиццаг хэрхэн бэлтгэх вэ? Нууц жор...</p>
-                    <a href="#" class="more">Унших →</a>
+                    <h2>Итали пиццаны нууц жор</h2>
+                    <p>Гэртээ ресторан шиг пицца хийхэд ердөө 3-хан төрлийн орцоо өөрчлөхөд хангалттай...</p>
+                    <div class="card-footer">
+                        <span><i class="far fa-clock"></i> 2025.12.24</span>
+                        <a href="#" class="more">Унших</a>
+                    </div>
                 </div>
             </article>
 
@@ -41,26 +45,25 @@
                 <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=500');"></div>
                 <div class="card-content">
                     <span class="badge history">Түүх</span>
-                    <h2>Эртний Египетийн нууц</h2>
-                    <p>Пирамидуудыг хэрхэн барьсан бэ? Сүүлийн үеийн археологийн шинэ нээлтүүд.</p>
-                    <a href="#" class="more">Унших →</a>
-                </div>
-            </article>
-
-            <article class="card">
-                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=500');"></div>
-                <div class="card-content">
-                    <span class="badge news">Мэдээ</span>
-                    <h2>AI ба бидний ирээдүй</h2>
-                    <p>Хиймэл оюун ухаан бидний ажлын байранд хэрхэн нөлөөлөх вэ?</p>
-                    <a href="#" class="more">Унших →</a>
+                    <h2>Мартагдсан соёл иргэншил</h2>
+                    <p>Төв Азийн нүүдэлчдийн дэлхийн түүхэнд гүйцэтгэсэн үүрэг болон шинэ баримтууд.</p>
+                    <div class="card-footer">
+                        <span><i class="far fa-clock"></i> 2025.12.23</span>
+                        <a href="#" class="more">Унших</a>
+                    </div>
                 </div>
             </article>
         </main>
     </div>
 
     <footer>
-        <p>&copy; 2025 Mandri Blog. Бүрэн эрх хуулиар хамгаалагдсан.</p>
+        <div class="footer-content">
+            <p>&copy; 2025 Mandri Blog. Powered by Bataa</p>
+            <div class="socials">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
     </footer>
 </body>
 </html>
