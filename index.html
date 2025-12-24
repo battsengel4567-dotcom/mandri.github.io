@@ -3,83 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mandri Hub</title>
+    <title>Mandri Hub | Шууд Нийтлэл</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="nav-container">
-            <div class="logo">Mandri<span>Hub</span></div>
-            <nav>
-                <a href="index.html">Нүүр</a>
-                <a href="submit.html" class="btn-submit">Нийтлэх</a>
-            </nav>
+            <div class="logo" onclick="location.reload()">Mandri<span>Hub</span></div>
+            <nav><a href="submit.html" class="btn-submit">+ Нийтлэл нэмэх</a></nav>
         </div>
     </header>
 
     <div class="container">
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Нийтлэл хайх...">
+        <div id="home-scene" class="scene active">
+            <h1 class="center-title">Сэдэв сонгоод нийтлэлүүдийг үз</h1>
+            <div class="scene-grid">
+                <div class="scene-card" onclick="loadPosts('news')">📰 Мэдээ</div>
+                <div class="scene-card" onclick="loadPosts('recipe')">🍕 Хоолны Жор</div>
+                <div class="scene-card" onclick="loadPosts('history')">📜 Түүх</div>
+            </div>
         </div>
 
-        <div class="filter-buttons">
-            <button class="f-btn active" onclick="filterData('all')">Бүгд</button>
-            <button class="f-btn" onclick="filterData('recipe')">Хоолны Жор</button>
-            <button class="f-btn" onclick="filterData('history')">Түүх</button>
+        <div id="list-scene" class="scene">
+            <button class="back-btn" onclick="showScene('home-scene')">← Буцах</button>
+            <h1 id="category-title">Сэдэв</h1>
+            <div id="posts-container" class="post-list">
+                </div>
         </div>
-
-        <main class="grid" id="postGrid">
-            <div class="card recipe">
-                <h2>Итали пиццаны жор</h2>
-                <p>Гэртээ ресторан шиг пицца хийх хамгийн амархан арга...</p>
-                <a href="#pizza-detail" class="go-btn">Унших</a>
-            </div>
-
-            <div class="card history">
-                <h2>Монгол Өртөөний түүх</h2>
-                <p>Эртний Монголын мэдээлэл дамжуулах супер сүлжээ...</p>
-                <a href="#history-detail" class="go-btn">Унших</a>
-            </div>
-        </main>
-
-        <section class="details">
-            <div id="pizza-detail" class="post-full">
-                <h1>🍕 Итали пиццаны жор</h1>
-                <p>Орц: Гурил, ус, бяслаг, улаан лоолийн соус. Заавар: Гурилаа хөөлгөөд соусаа түрхээд 200 хэмд жигнэнэ.</p>
-                <a href="#">Дээшээ буцах ↑</a>
-            </div>
-
-            <div id="history-detail" class="post-full">
-                <h1>📜 Монгол Өртөөний түүх</h1>
-                <p>Өртөө бол 13-р зууны хамгийн хурдан шуудан байсан. Мориор мэдээг маш хурдан дамжуулдаг байв.</p>
-                <a href="#">Дээшээ буцах ↑</a>
-            </div>
-        </section>
     </div>
 
     <script>
-        // Хайлт хийх
-        document.getElementById('searchInput').addEventListener('keyup', function() {
-            let val = this.value.toLowerCase();
-            let cards = document.querySelectorAll('.card');
-            cards.forEach(c => {
-                let h2 = c.querySelector('h2').innerText.toLowerCase();
-                c.style.display = h2.includes(val) ? "" : "none";
-            });
-        });
+        const scriptURL = "https://script.google.com/macros/s/AKfycbyjWKG3JGL0Lxqm6jCuqUI2Du6SESUKLvXMamjRZ023xh-9iBH-5TWQKROMVlJau9Jp2Q/exec";
 
-        // Ангилал шүүх
-        function filterData(cat) {
-            let cards = document.querySelectorAll('.card');
-            cards.forEach(c => {
-                if(cat === 'all' || c.classList.contains(cat)) {
-                    c.style.display = "block";
-                } else {
-                    c.style.display = "none";
+        function showScene(id) {
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        async function loadPosts(category) {
+            showScene('list-scene');
+            document.getElementById('category-title').innerText = category.toUpperCase();
+            const container = document.getElementById('posts-container');
+            container.innerHTML = "<p class='loading'>Уншиж байна...</p>";
+
+            try {
+                const response = await fetch(scriptURL);
+                const data = await response.json();
+                
+                container.innerHTML = "";
+                // Сэдвээр нь шүүж, хамгийн сүүлийнх нь дээрээ харагдахаар (reverse) харуулна
+                const filtered = data.filter(row => row[0] === category).reverse();
+
+                if (filtered.length === 0) {
+                    container.innerHTML = "<p>Одоогоор нийтлэл алга.</p>";
+                    return;
                 }
-            });
-            document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+
+                filtered.forEach(row => {
+                    container.innerHTML += `
+                        <div class="post-item">
+                            <p class="post-text">${row[1]}</p>
+                            ${row[2] ? `<img src="${row[2]}" class="post-img">` : ""}
+                            <div class="post-date">Нийтлэгдсэн</div>
+                        </div>`;
+                });
+            } catch (e) {
+                container.innerHTML = "<p>Мэдээлэл авахад алдаа гарлаа. Sheet-ээ шалгана уу.</p>";
+            }
         }
     </script>
 </body>

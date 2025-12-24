@@ -1,17 +1,28 @@
-body { background: #000; color: #fff; font-family: sans-serif; margin: 0; scroll-behavior: smooth; }
-.nav-container { display: flex; justify-content: space-between; padding: 20px; background: #111; }
-.logo span { color: #ff4757; }
-.container { max-width: 900px; margin: auto; padding: 20px; }
+body { background: #0d1117; color: #c9d1d9; font-family: 'Segoe UI', sans-serif; margin: 0; }
+.container { max-width: 800px; margin: auto; padding: 20px; }
 
-.search-bar input { width: 100%; padding: 15px; background: #222; border: 1px solid #444; color: #fff; border-radius: 8px; margin-bottom: 20px; }
+/* Scene Шилжилт */
+.scene { display: none; }
+.scene.active { display: block; animation: fadeIn 0.4s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.filter-buttons { margin-bottom: 20px; }
-.f-btn { padding: 10px 20px; background: #333; border: none; color: #fff; cursor: pointer; border-radius: 20px; margin-right: 10px; }
-.f-btn.active { background: #ff4757; }
+/* Сэдэв сонгох карт */
+.scene-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 30px; }
+.scene-card { 
+    background: #161b22; padding: 40px 10px; border-radius: 12px; 
+    text-align: center; cursor: pointer; border: 1px solid #30363d; transition: 0.3s;
+}
+.scene-card:hover { border-color: #ff4757; transform: translateY(-5px); }
 
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.card { background: #1a1a1a; padding: 20px; border-radius: 10px; border: 1px solid #333; }
-.go-btn { color: #ff4757; text-decoration: none; font-weight: bold; display: block; margin-top: 10px; }
+/* Нийтлэлийн жагсаалт */
+.post-item { background: #161b22; padding: 25px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #30363d; }
+.post-img { width: 100%; border-radius: 8px; margin-top: 15px; }
+.post-text { font-size: 1.1rem; line-height: 1.6; white-space: pre-wrap; }
 
-.post-full { background: #111; padding: 40px; margin-top: 50px; border-radius: 10px; border-top: 4px solid #ff4757; }
-.post-full a { color: #888; text-decoration: none; font-size: 14px; }
+/* Форм */
+.form-card { background: #111; padding: 30px; border-radius: 15px; }
+.input-field { 
+    width: 100%; padding: 12px; margin: 10px 0 20px; 
+    background: #222; border: 1px solid #444; color: white; border-radius: 8px; box-sizing: border-box;
+}
+.btn-main { width: 100%; padding: 15px; background: #ff4757; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }

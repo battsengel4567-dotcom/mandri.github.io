@@ -1,39 +1,62 @@
-<form id="submissionForm" action="https://formspree.io/f/ЧИНИЙ_ID" method="POST">
-    <div class="input-group">
-        <label>Нийтлэлийн гарчиг</label>
-        <input type="text" name="title" id="postTitle" required placeholder="Гарчиг...">
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <title>Нийтлэх | Mandri Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-card">
+            <h1>✍️ Шинэ нийтлэл</h1>
+            
+            <label>Сэдэв сонгох:</label>
+            <select id="post-category" class="input-field">
+                <option value="news">Мэдээ</option>
+                <option value="recipe">Хоолны Жор</option>
+                <option value="history">Түүх</option>
+            </select>
+
+            <label>Зураг эсвэл Бичлэгийн линк (URL):</label>
+            <input type="url" id="post-media" class="input-field" placeholder="https://example.com/image.jpg">
+
+            <label>Текст:</label>
+            <textarea id="post-content" class="input-field" rows="6" placeholder="Юу нийтлэх вэ?"></textarea>
+
+            <button onclick="publish()" id="submit-btn" class="btn-main">Шууд Нийтлэх</button>
+            <p id="status-msg"></p>
+        </div>
     </div>
 
-    <div class="input-group">
-        <label>Нийтлэлийн агуулга</label>
-        <textarea name="content" id="postContent" rows="8" required placeholder="Текстээ энд бичнэ үү..."></textarea>
-    </div>
+    <script>
+        async function publish() {
+            const btn = document.getElementById('submit-btn');
+            const msg = document.getElementById('status-msg');
+            const url = "https://script.google.com/macros/s/AKfycbyjWKG3JGL0Lxqm6jCuqUI2Du6SESUKLvXMamjRZ023xh-9iBH-5TWQKROMVlJau9Jp2Q/exec";
 
-    <div id="aiStatus" style="display:none; color: #ff4757; margin-bottom: 15px; font-weight: bold;"></div>
+            const content = document.getElementById('post-content').value;
+            if(!content) { alert("Текст бичнэ үү!"); return; }
 
-    <button type="submit" id="submitBtn" class="submit-btn-full">Нийтлэлийг илгээх</button>
-</form>
+            btn.disabled = true;
+            btn.innerText = "Илгээж байна...";
 
-<script>
-    const forbiddenWords = ['тэнэг', 'хог', 'spam', 'http', 'www', '.com', 'порно']; // Шүүх үгс
+            const params = new URLSearchParams({
+                category: document.getElementById('post-category').value,
+                content: content,
+                media: document.getElementById('post-media').value
+            });
 
-    document.getElementById('submissionForm').addEventListener('submit', function(e) {
-        const title = document.getElementById('postTitle').value.toLowerCase();
-        const content = document.getElementById('postContent').value.toLowerCase();
-        const status = document.getElementById('aiStatus');
-
-        // AI Шүүлтүүр ажиллаж байна
-        let isBad = forbiddenWords.some(word => title.includes(word) || content.includes(word));
-
-        if (isBad) {
-            e.preventDefault(); // Илгээхийг зогсооно
-            status.style.display = 'block';
-            status.innerText = "⚠️ AI Хяналт: Таны бичвэрт зохисгүй үг эсвэл линк илэрсэн тул илгээх боломжгүй!";
-            alert("Зохисгүй агуулга илэрлээ!");
-        } else {
-            status.style.display = 'block';
-            status.style.color = '#2ed573';
-            status.innerText = "✅ AI шалгаж дууслаа. Илгээж байна...";
+            try {
+                // POST хүсэлт илгээх (no-cors нь Google-ийн хамгаалалтыг давахад тусална)
+                await fetch(url, { method: 'POST', body: params, mode: 'no-cors' });
+                msg.innerText = "✅ Амжилттай нийтлэгдлээ!";
+                setTimeout(() => window.location.href = "index.html", 1500);
+            } catch (e) {
+                alert("Алдаа гарлаа!");
+                btn.disabled = false;
+                btn.innerText = "Дахин оролдох";
+            }
         }
-    });
-</script>
+    </script>
+</body>
+</html>
