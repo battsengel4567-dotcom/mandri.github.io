@@ -1,28 +1,73 @@
-async function adminDelete(postId) {
-    const password = prompt("Админ нууц код:");
-    if (password !== "mandri123") return alert("Буруу код!");
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<title>Mandri Knowledge</title>
+<style>
+body { font-family: Arial; background:#f4f4f4; padding:20px; }
+button { padding:10px; margin:5px; }
+.section { display:none; margin-top:15px; }
+.card { background:white; padding:15px; border-radius:8px; }
+</style>
+</head>
+<body>
 
-    const token = "ЧИНИЙ_GITHUB_TOKEN_ЭНД";
-    const repo = "battsengel4567-dotcom/mandri.github.io";
-    const path = "posts.json";
+<h1>📚 Mandri Мэдлэгийн Сан</h1>
 
-    // GitHub-аас файлаа аваад тухайн ID-тай постыг хасна
-    const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`);
-    const fileData = await res.json();
-    let posts = JSON.parse(atob(fileData.content));
-    
-    posts = posts.filter(p => p.id != postId); // Устгах үйлдэл
+<!-- 1-р түвшин -->
+<div>
+<button onclick="show('science')">🔬 Шинжлэх ухаан</button>
+<button onclick="show('art')">🎨 Урлаг</button>
+<button onclick="show('sport')">⚽ Спорт</button>
+<button onclick="show('health')">🧠 Эрүүл мэнд</button>
+<button onclick="show('fun')">🧩 Сонин содон</button>
+</div>
 
-    // Шинэчилсэн файлаа буцааж хадгалах
-    await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
-        method: "PUT",
-        headers: { "Authorization": `token ${token}` },
-        body: JSON.stringify({
-            message: "Post deleted by admin",
-            content: btoa(unescape(encodeURIComponent(JSON.stringify(posts, null, 2)))),
-            sha: fileData.sha
-        })
-    });
-    alert("Пост устгагдлаа!");
-    location.reload();
+<!-- Шинжлэх ухаан -->
+<div id="science" class="section card">
+<h2>🔬 Шинжлэх ухаан</h2>
+<button onclick="show('theory')">📘 Онол</button>
+<button onclick="show('experiment')">🧪 Туршилт</button>
+<button onclick="show('fact')">📜 Баримт</button>
+</div>
+
+<!-- Онол -->
+<div id="theory" class="section card">
+<h3>📘 Онол</h3>
+<button onclick="show('tesla')">ℹ️ Мэдээлэл</button>
+</div>
+
+<!-- Тесла -->
+<div id="tesla" class="section card">
+<h4>⚡ Никола Тесла</h4>
+<p>
+Никола Тесла нь <b>цахилгаан соронзон орны онол</b>,
+хувьсах гүйдлийн системийг хөгжүүлсэн суут эрдэмтэн юм.
+</p>
+</div>
+
+<!-- Юм нэмэх -->
+<hr>
+<button onclick="show('add')">➕ Юм нэмэх</button>
+
+<div id="add" class="section card">
+<h3>📝 Мэдээлэл илгээх</h3>
+
+<form action="https://battsengel4567" method="GET">
+<input type="text" name="name" placeholder="Таны нэр" required><br><br>
+<input type="text" name="topic" placeholder="Сэдэв" required><br><br>
+<textarea name="content" placeholder="Мэдээлэл" required></textarea><br><br>
+<button type="submit">📨 Илгээх</button>
+</form>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.section')
+    .forEach(s => s.style.display = "none");
+  document.getElementById(id).style.display = "block";
 }
+</script>
+
+</body>
+</html>
