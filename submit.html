@@ -3,41 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Нийтлэл илгээх | FutureMind</title>
+    <title>Нийтлэл Илгээх | Mandri</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="nav-container">
-            <div class="logo">Future<span>Mind</span></div>
-            <nav>
-                <a href="index.html">Буцах</a>
-            </nav>
+            <div class="logo">Mandri<span>Blog</span></div>
+            <nav><a href="index.html">Буцах</a></nav>
         </div>
     </header>
 
-    <div class="container">
-        <section class="form-section">
-            <h1>Өөрийн нийтлэлийг илгээх</h1>
-            <p>Таны илгээсэн нийтлэлийг бид хянаж үзээд сайт дээрээ байршуулах болно.</p>
+    <div class="container" style="max-width: 600px;">
+        <h1>Нийтлэл илгээх</h1>
+        <p>Та өөрийн мэдээлэл, жор, эсвэл түүхийг энд бичиж илгээгээрэй.</p>
+        
+        <form style="background: #1a1d1d; padding: 30px; border-radius: 10px; margin-top: 20px;">
+            <label>Гарчиг</label>
+            <input type="text" style="width:100%; padding:10px; margin:10px 0; background:#222; border:1px solid #444; color:white;">
             
-            <div class="form-box">
-                <label>Нийтлэлийн гарчиг</label>
-                <input type="text" placeholder="Энд бичнэ үү...">
-                
-                <label>Ангилал</label>
-                <select>
-                    <option>Мэдээ</option>
-                    <option>Хоолны жор</option>
-                    <option>Түүх</option>
-                </select>
+            <label>Ангилал</label>
+            <select style="width:100%; padding:10px; margin:10px 0; background:#222; border:1px solid #444; color:white;">
+                <option>Мэдээ</option>
+                <option>Хоолны Жор</option>
+                <option>Түүх</option>
+            </select>
 
-                <label>Нийтлэлийн текст</label>
-                <textarea rows="10" placeholder="Таны нийтлэл..."></textarea>
-                
-                <button class="submit-btn-full">Илгээх</button>
-            </div>
-        </section>
+            <label>Агуулга</label>
+            <textarea style="width:100%; padding:10px; margin:10px 0; background:#222; border:1px solid #444; color:white; height:150px;"></textarea>
+
+            <button type="button" onclick="alert('Амжилттай илгээгдлээ!')" style="width:100%; padding:12px; background:#ff4757; border:none; color:white; font-weight:bold; cursor:pointer;">Илгээх</button>
+        </form>
     </div>
 </body>
 </html>
