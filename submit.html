@@ -9,20 +9,16 @@
     <div class="container">
         <div class="form-card">
             <h1>✍️ Шинэ нийтлэл</h1>
-            
             <label>Сэдэв сонгох:</label>
             <select id="post-category" class="input-field">
                 <option value="news">Мэдээ</option>
                 <option value="recipe">Хоолны Жор</option>
                 <option value="history">Түүх</option>
             </select>
-
-            <label>Зураг эсвэл Бичлэгийн линк (URL):</label>
+            <label>Зурагны линк (URL):</label>
             <input type="url" id="post-media" class="input-field" placeholder="https://example.com/image.jpg">
-
             <label>Текст:</label>
             <textarea id="post-content" class="input-field" rows="6" placeholder="Юу нийтлэх вэ?"></textarea>
-
             <button onclick="publish()" id="submit-btn" class="btn-main">Шууд Нийтлэх</button>
             <p id="status-msg"></p>
         </div>
@@ -31,9 +27,7 @@
     <script>
         async function publish() {
             const btn = document.getElementById('submit-btn');
-            const msg = document.getElementById('status-msg');
             const url = "https://script.google.com/macros/s/AKfycbyjWKG3JGL0Lxqm6jCuqUI2Du6SESUKLvXMamjRZ023xh-9iBH-5TWQKROMVlJau9Jp2Q/exec";
-
             const content = document.getElementById('post-content').value;
             if(!content) { alert("Текст бичнэ үү!"); return; }
 
@@ -47,10 +41,9 @@
             });
 
             try {
-                // POST хүсэлт илгээх (no-cors нь Google-ийн хамгаалалтыг давахад тусална)
                 await fetch(url, { method: 'POST', body: params, mode: 'no-cors' });
-                msg.innerText = "✅ Амжилттай нийтлэгдлээ!";
-                setTimeout(() => window.location.href = "index.html", 1500);
+                alert("Амжилттай нийтлэгдлээ!");
+                window.location.href = "index.html";
             } catch (e) {
                 alert("Алдаа гарлаа!");
                 btn.disabled = false;

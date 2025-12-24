@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mandri Hub | Шууд Нийтлэл</title>
+    <title>Mandri Hub | Live Blog</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -45,14 +45,12 @@
             showScene('list-scene');
             document.getElementById('category-title').innerText = category.toUpperCase();
             const container = document.getElementById('posts-container');
-            container.innerHTML = "<p class='loading'>Уншиж байна...</p>";
+            container.innerHTML = "<p>Уншиж байна...</p>";
 
             try {
                 const response = await fetch(scriptURL);
                 const data = await response.json();
-                
                 container.innerHTML = "";
-                // Сэдвээр нь шүүж, хамгийн сүүлийнх нь дээрээ харагдахаар (reverse) харуулна
                 const filtered = data.filter(row => row[0] === category).reverse();
 
                 if (filtered.length === 0) {
@@ -65,11 +63,11 @@
                         <div class="post-item">
                             <p class="post-text">${row[1]}</p>
                             ${row[2] ? `<img src="${row[2]}" class="post-img">` : ""}
-                            <div class="post-date">Нийтлэгдсэн</div>
+                            <hr>
                         </div>`;
                 });
             } catch (e) {
-                container.innerHTML = "<p>Мэдээлэл авахад алдаа гарлаа. Sheet-ээ шалгана уу.</p>";
+                container.innerHTML = "<p>Алдаа гарлаа. Sheet-ээ шалгана уу.</p>";
             }
         }
     </script>

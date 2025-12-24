@@ -1,28 +1,14 @@
-body { background: #0d1117; color: #c9d1d9; font-family: 'Segoe UI', sans-serif; margin: 0; }
+body { background: #0d1117; color: #c9d1d9; font-family: sans-serif; margin: 0; }
 .container { max-width: 800px; margin: auto; padding: 20px; }
-
-/* Scene Шилжилт */
 .scene { display: none; }
-.scene.active { display: block; animation: fadeIn 0.4s; }
+.scene.active { display: block; animation: fadeIn 0.3s; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* Сэдэв сонгох карт */
 .scene-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 30px; }
-.scene-card { 
-    background: #161b22; padding: 40px 10px; border-radius: 12px; 
-    text-align: center; cursor: pointer; border: 1px solid #30363d; transition: 0.3s;
-}
-.scene-card:hover { border-color: #ff4757; transform: translateY(-5px); }
+.scene-card { background: #161b22; padding: 30px 10px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid #30363d; }
+.scene-card:hover { border-color: #ff4757; }
 
-/* Нийтлэлийн жагсаалт */
-.post-item { background: #161b22; padding: 25px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #30363d; }
-.post-img { width: 100%; border-radius: 8px; margin-top: 15px; }
-.post-text { font-size: 1.1rem; line-height: 1.6; white-space: pre-wrap; }
-
-/* Форм */
-.form-card { background: #111; padding: 30px; border-radius: 15px; }
-.input-field { 
-    width: 100%; padding: 12px; margin: 10px 0 20px; 
-    background: #222; border: 1px solid #444; color: white; border-radius: 8px; box-sizing: border-box;
-}
-.btn-main { width: 100%; padding: 15px; background: #ff4757; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+.post-item { background: #161b22; padding: 20px; border-radius: 10px; margin-bottom: 15px; }
+.post-img { width: 100%; border-radius: 8px; margin-top: 10px; }
+.input-field { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; box-sizing: border-box; }
+.btn-main { width: 100%; padding: 15px; background: #ff4757; color: white; border: none; border-radius: 8px; cursor: pointer; }
