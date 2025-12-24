@@ -1,28 +1,50 @@
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+async function savePost() {
+    const token = "ЧИНИЙ_GITHUB_TOKEN_ЭНД"; // Token-оо энд тавь
+    const repo = "battsengel4567-dotcom/mandri.github.io";
+    const path = "posts.json";
 
-<script>
-    const firebaseConfig = { databaseURL: "https://ЧИНИЙ-ТӨСЛИЙН-НЭР.firebaseio.com" };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    const content = document.getElementById('msg').value;
+    const category = document.getElementById('cat').value;
+    const image = document.getElementById('img').value;
 
-    function savePost() {
-        const category = document.getElementById('category').value;
-        const content = document.getElementById('content').value;
-        const image = document.getElementById('image').value;
-        const date = new Date().toLocaleString();
+    if (!content) return alert("Текст бичнэ үү!");
 
-        if(!content) return alert("Текст бичнэ үү!");
+    try {
+        // 1. Одоо байгаа өгөгдлийг татаж авах
+        const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            headers: { "Authorization": `token ${token}` }
+        });
+        const fileData = await res.json();
+        const posts = JSON.parse(atob(fileData.content));
 
-        // Firebase рүү үүрд хадгалахаар илгээх
-        db.ref('posts').push({
+        // 2. Шинэ нийтлэлийг нэмэх (Spawn data)
+        posts.push({
+            id: Date.now(),
             category: category,
             content: content,
             image: image,
-            date: date
+            date: new Date().toLocaleString()
         });
 
-        alert("Нийтлэл үүрд хадгалагдлаа!");
-        window.location.href = "index.html";
+        // 3. GitHub руу буцааж хадгалах (Self-update)
+        const updateRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            method: "PUT",
+            headers: { 
+                "Authorization": `token ${token}`,
+                "Content-Type": "application/json" 
+            },
+            body: JSON.stringify({
+                message: "New post spawned",
+                content: btoa(unescape(encodeURIComponent(JSON.stringify(posts, null, 2)))),
+                sha: fileData.sha
+            })
+        });
+
+        if (updateRes.ok) {
+            alert("Амжилттай нийтлэгдлээ! Сайт 1 минутын дараа шинэчлэгдэнэ.");
+            window.location.href = "index.html";
+        }
+    } catch (e) {
+        alert("Алдаа гарлаа: " + e.message);
     }
-</script>
+}

@@ -1,56 +1,28 @@
-<!DOCTYPE html>
-<html lang="mn">
-<head>
-    <meta charset="UTF-8">
-    <title>FutureMind | 100% Independent</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <div class="nav-container">
-            <div class="logo">🚀 FutureMind</div>
-            <nav><a href="submit.html" class="btn-submit">+ Нийтлэх</a></nav>
-        </div>
-    </header>
+async function adminDelete(postId) {
+    const password = prompt("Админ нууц код:");
+    if (password !== "mandri123") return alert("Буруу код!");
 
-    <div class="container">
-        <div id="home-scene" class="scene active">
-            <div class="scene-grid">
-                <div class="scene-card" onclick="loadAndSpawn('news')">🤖 AI Технологи</div>
-                <div class="scene-card" onclick="loadAndSpawn('tesla')">⚡ Tesla Энерги</div>
-            </div>
-        </div>
+    const token = "ЧИНИЙ_GITHUB_TOKEN_ЭНД";
+    const repo = "battsengel4567-dotcom/mandri.github.io";
+    const path = "posts.json";
 
-        <div id="list-scene" class="scene">
-            <button class="back-btn" onclick="location.reload()">← Буцах</button>
-            <div id="spawn-area"></div>
-        </div>
-    </div>
+    // GitHub-аас файлаа аваад тухайн ID-тай постыг хасна
+    const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`);
+    const fileData = await res.json();
+    let posts = JSON.parse(atob(fileData.content));
+    
+    posts = posts.filter(p => p.id != postId); // Устгах үйлдэл
 
-    <script>
-        async function loadAndSpawn(category) {
-            document.getElementById('home-scene').classList.remove('active');
-            document.getElementById('list-scene').classList.add('active');
-            const area = document.getElementById('spawn-area');
-            
-            // Өөрийн GitHub дээрх файлаас өгөгдөл унших
-            const response = await fetch('posts.json');
-            const posts = await response.json();
-            
-            const filtered = posts.filter(p => p.category === category).reverse();
-            area.innerHTML = filtered.length ? "" : "Нийтлэл алга.";
-
-            filtered.forEach((post, index) => {
-                const item = document.createElement('div');
-                item.className = 'post-item spawn-anim';
-                item.innerHTML = `
-                    <p>${post.content}</p>
-                    ${post.image ? `<img src="${post.image}" class="post-img">` : ""}
-                    <button onclick="adminDelete('${post.id}')" class="admin-btn">Устгах</button>
-                `;
-                area.appendChild(item);
-            });
-        }
-    </script>
-</body>
-</html>
+    // Шинэчилсэн файлаа буцааж хадгалах
+    await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+        method: "PUT",
+        headers: { "Authorization": `token ${token}` },
+        body: JSON.stringify({
+            message: "Post deleted by admin",
+            content: btoa(unescape(encodeURIComponent(JSON.stringify(posts, null, 2)))),
+            sha: fileData.sha
+        })
+    });
+    alert("Пост устгагдлаа!");
+    location.reload();
+}
