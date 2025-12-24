@@ -1,45 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn">
 <head>
-  <meta charset="UTF-8">
-  <title>FutureMind – Tesla • AI • Science</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="FutureMind blog about Tesla, AI, science facts and cool inventions.">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandri Hub | Мэдээллийн нэгдсэн төв</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="location.reload()">Mandri<span>Hub</span></div>
+            <nav>
+                <a href="submit.html" class="btn-submit">+ Нийтлэл оруулах</a>
+            </nav>
+        </div>
+    </header>
 
-<header>
-  <h1>🚀 FutureMind</h1>
-  <p>Tesla • AI • Science • Cool Inventions</p>
-</header>
+    <div class="container">
+        <div id="home-scene" class="scene active">
+            <h1 class="center-title">Сэдэв сонгоно уу</h1>
+            <div class="scene-grid">
+                <div class="scene-card news" onclick="loadPosts('news')">
+                    <div class="icon">📰</div>
+                    <h3>Мэдээлэл</h3>
+                </div>
+                <div class="scene-card recipe" onclick="loadPosts('recipe')">
+                    <div class="icon">🍕</div>
+                    <h3>Хоолны Жор</h3>
+                </div>
+                <div class="scene-card history" onclick="loadPosts('history')">
+                    <div class="icon">📜</div>
+                    <h3>Түүхэн сэдэв</h3>
+                </div>
+            </div>
+        </div>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="donate.html">Donate</a>
-</nav>
+        <div id="list-scene" class="scene">
+            <button class="back-btn" onclick="showScene('home-scene')">← Буцах</button>
+            <h1 id="category-display-title">Сэдэв</h1>
+            <div id="posts-container" class="post-list">
+                </div>
+        </div>
+    </div>
 
-<main>
-  <article>
-    <h2>🤖 What is Artificial Intelligence?</h2>
-    <p>Artificial Intelligence (AI) is technology that allows machines to think and learn.</p>
-    <a href="post-ai.html">Read more →</a>
-  </article>
+    <script>
+        const scriptURL = "https://script.google.com/macros/s/AKfycbyjWKG3JGL0Lxqm6jCuqUI2Du6SESUKLvXMamjRZ023xh-9iBH-5TWQKROMVlJau9Jp2Q/exec";
 
-  <article>
-    <h2>⚡ Why Tesla is Changing the World</h2>
-    <p>Tesla is more than a car company. It is about the future of energy.</p>
-    <a href="post-tesla.html">Read more →</a>
-  </article>
+        function showScene(id) {
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
 
-  <div class="ads">Advertisement</div>
-</main>
+        async function loadPosts(category) {
+            showScene('list-scene');
+            const titleMap = {'news': '📰 Мэдээ мэдээлэл', 'recipe': '🍕 Хоолны Жор', 'history': '📜 Түүхэн сэдэв'};
+            document.getElementById('category-display-title').innerText = titleMap[category];
+            
+            const container = document.getElementById('posts-container');
+            container.innerHTML = "<p class='loading-text'>Мэдээллийг татаж байна...</p>";
 
-<footer>
-  <p>© 2025 FutureMind Blog</p>
-</footer>
+            try {
+                const response = await fetch(scriptURL);
+                const data = await response.json();
+                container.innerHTML = "";
 
+                // Сэдэв болон хоосон биш өгөгдлөөр шүүнэ
+                const filtered = data.filter(row => row[0] === category && row[1]).reverse();
+
+                if (filtered.length === 0) {
+                    container.innerHTML = "<div class='empty-msg'>Энэ сэдэвт одоогоор нийтлэл алга.</div>";
+                    return;
+                }
+
+                filtered.forEach(row => {
+                    container.innerHTML += `
+                        <div class="post-card">
+                            <div class="post-body">
+                                <p class="post-text">${row[1]}</p>
+                                ${row[2] ? `<img src="${row[2]}" class="post-media" onerror="this.style.display='none'">` : ""}
+                            </div>
+                            <div class="post-footer">Шууд нийтлэгдсэн</div>
+                        </div>`;
+                });
+            } catch (e) {
+                container.innerHTML = "<p>Алдаа гарлаа. Түр хүлээгээд дахин оролдоно уу.</p>";
+            }
+        }
+    </script>
 </body>
 </html>
-border-radius: 8px; cursor: pointer; }
