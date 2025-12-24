@@ -9,36 +9,16 @@
 <div class="container">
 <h2>📘 Онол</h2>
 
-<input id="search" placeholder="🔍 Хайх..." oninput="filter()">
+<input id="search" placeholder="🔍 Хайх..." oninput="filter('search','list')">
 <div id="list"></div>
 
 <button onclick="history.back()">⬅ Буцах</button>
 <button onclick="toggle()">🌙 / ☀️</button>
 </div>
-
 <script src="script.js"></script>
 <script>
 let data = JSON.parse(localStorage.getItem("theory")) || [];
-let list = document.getElementById("list");
-
-function render(arr){
-  list.innerHTML="";
-  arr.forEach(d=>{
-    let div = document.createElement("div");
-    div.className="card";
-    div.innerHTML = `<h3>${d.title}</h3>`+
-                    (d.img ? `<img src="${d.img}">` : "") +
-                    `<p>${d.text}</p>`;
-    list.appendChild(div);
-  });
-}
-render(data);
-
-function filter(){
-  let q = search.value.toLowerCase();
-  render(data.filter(d => d.title.toLowerCase().includes(q) || d.text.toLowerCase().includes(q)));
-}
-if(localStorage.getItem("theme")==="light") document.body.classList.add("light");
+filter('search','list');
 </script>
 </body>
 </html>
