@@ -2,53 +2,37 @@
 <html lang="mn">
 <head>
     <meta charset="UTF-8">
-    <title>Нийтлэх | Mandri Hub</title>
+    <title>Нийтлэл нэмэх | FutureMind</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <div class="form-card">
+        <div class="post-item">
             <h1>✍️ Шинэ нийтлэл</h1>
-            <label>Сэдэв сонгох:</label>
-            <select id="post-category" class="input-field">
-                <option value="news">Мэдээ</option>
-                <option value="recipe">Хоолны Жор</option>
-                <option value="history">Түүх</option>
+            <select id="cat" style="width:100%; padding:10px; margin-bottom:15px; background:#0d1117; color:white; border-radius:5px;">
+                <option value="news">AI & Технологи</option>
+                <option value="tesla">Tesla & Энерги</option>
+                <option value="science">Шинжлэх ухаан</option>
             </select>
-            <label>Зурагны линк (URL):</label>
-            <input type="url" id="post-media" class="input-field" placeholder="https://example.com/image.jpg">
-            <label>Текст:</label>
-            <textarea id="post-content" class="input-field" rows="6" placeholder="Юу нийтлэх вэ?"></textarea>
-            <button onclick="publish()" id="submit-btn" class="btn-main">Шууд Нийтлэх</button>
-            <p id="status-msg"></p>
+            <input type="text" id="img" style="width:100%; padding:10px; margin-bottom:15px; background:#0d1117; color:white; border-radius:5px;" placeholder="Зурагны линк">
+            <textarea id="msg" style="width:100%; padding:10px; background:#0d1117; color:white; border-radius:5px;" rows="6" placeholder="Нийтлэх текст..."></textarea>
+            <button onclick="send()" id="btn" style="width:100%; padding:15px; margin-top:15px; background:#238636; color:white; border:none; border-radius:5px; cursor:pointer;">Шууд нийтлэх</button>
         </div>
     </div>
 
     <script>
-        async function publish() {
-            const btn = document.getElementById('submit-btn');
-            const url = "https://script.google.com/macros/s/AKfycbyjWKG3JGL0Lxqm6jCuqUI2Du6SESUKLvXMamjRZ023xh-9iBH-5TWQKROMVlJau9Jp2Q/exec";
-            const content = document.getElementById('post-content').value;
-            if(!content) { alert("Текст бичнэ үү!"); return; }
-
-            btn.disabled = true;
+        async function send() {
+            const btn = document.getElementById('btn');
             btn.innerText = "Илгээж байна...";
-
-            const params = new URLSearchParams({
-                category: document.getElementById('post-category').value,
-                content: content,
-                media: document.getElementById('post-media').value
+            const url = "https://script.google.com/macros/s/AKfycbyjWKG3JGL0Lxqm6jCuqUI2Du6SESUKLvXMamjRZ023xh-9iBH-5TWQKROMVlJau9Jp2Q/exec";
+            const data = new URLSearchParams({
+                category: document.getElementById('cat').value,
+                content: document.getElementById('msg').value,
+                media: document.getElementById('img').value
             });
-
-            try {
-                await fetch(url, { method: 'POST', body: params, mode: 'no-cors' });
-                alert("Амжилттай нийтлэгдлээ!");
-                window.location.href = "index.html";
-            } catch (e) {
-                alert("Алдаа гарлаа!");
-                btn.disabled = false;
-                btn.innerText = "Дахин оролдох";
-            }
+            await fetch(url, { method: 'POST', body: data, mode: 'no-cors' });
+            alert("Амжилттай!");
+            window.location.href = "index.html";
         }
     </script>
 </body>
