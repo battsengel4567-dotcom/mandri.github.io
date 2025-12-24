@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #0b0b2a;
+  color: white;
+}
+.App {
+  text-align: center;
+  padding: 20px;
+}
+input {
+  margin: 5px;
+  padding: 5px;
+}
+button {
+  margin: 5px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #6366f1;
+}
+.planets {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.planet {
+  padding: 10px;
+  background-color: #222244;
+  border-radius: 10px;
+}
