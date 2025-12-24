@@ -1,0 +1,35 @@
+:root {
+    --bg: #0b0e11;
+    --card: #15191c;
+    --accent: #e81e25;
+    --text: #f0f0f0;
+    --muted: #8a8d91;
+    --news-color: #3498db;
+    --recipe-color: #2ecc71;
+    --history-color: #f1c40f;
+}
+
+body { background: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; }
+
+.nav-container { display: flex; justify-content: space-between; padding: 20px 5%; background: #000; align-items: center; }
+.logo span { color: var(--accent); }
+nav a { color: var(--muted); text-decoration: none; margin-left: 20px; font-weight: bold; }
+
+.submit-btn { background: var(--accent); color: white; padding: 8px 15px; border-radius: 5px; }
+
+.container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+
+.post-card { background: var(--card); border-radius: 10px; overflow: hidden; position: relative; }
+.post-card img { width: 100%; height: 200px; object-fit: cover; }
+.post-content { padding: 20px; }
+
+.badge { position: absolute; top: 10px; left: 10px; padding: 5px 10px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; }
+.news { background: var(--news-color); }
+.recipe { background: var(--recipe-color); }
+.history { background: var(--history-color); color: black; }
+
+.form-box { background: var(--card); padding: 30px; border-radius: 10px; margin-top: 20px; }
+input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 5px; }
+.submit-btn-full { width: 100%; background: var(--accent); color: white; padding: 15px; border: none; font-weight: bold; cursor: pointer; }
