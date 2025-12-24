@@ -2,72 +2,25 @@
 <html lang="mn">
 <head>
 <meta charset="UTF-8">
-<title>Mandri Knowledge</title>
-<style>
-body { font-family: Arial; background:#f4f4f4; padding:20px; }
-button { padding:10px; margin:5px; }
-.section { display:none; margin-top:15px; }
-.card { background:white; padding:15px; border-radius:8px; }
-</style>
+<title>Mandri</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>📚 Mandri Мэдлэгийн Сан</h1>
+<div class="container">
+<h1>📚 Mandri</h1>
 
-<!-- 1-р түвшин -->
-<div>
-<button onclick="show('science')">🔬 Шинжлэх ухаан</button>
-<button onclick="show('art')">🎨 Урлаг</button>
-<button onclick="show('sport')">⚽ Спорт</button>
-<button onclick="show('health')">🧠 Эрүүл мэнд</button>
-<button onclick="show('fun')">🧩 Сонин содон</button>
+<div class="card" onclick="go('science.html')">🔬 Шинжлэх ухаан</div>
+<div class="card">🎨 Урлаг</div>
+<div class="card">⚽ Спорт</div>
+<div class="card">🧠 Эрүүл мэнд</div>
+<div class="card">🧩 Сонин содон</div>
+
+<button onclick="go('admin.html')">🔐 Админ</button>
+<button onclick="toggle()">🌙 / ☀️</button>
 </div>
 
-<!-- Шинжлэх ухаан -->
-<div id="science" class="section card">
-<h2>🔬 Шинжлэх ухаан</h2>
-<button onclick="show('theory')">📘 Онол</button>
-<button onclick="show('experiment')">🧪 Туршилт</button>
-<button onclick="show('fact')">📜 Баримт</button>
-</div>
-
-<!-- Онол -->
-<div id="theory" class="section card">
-<h3>📘 Онол</h3>
-<button onclick="show('tesla')">ℹ️ Мэдээлэл</button>
-</div>
-
-<!-- Тесла -->
-<div id="tesla" class="section card">
-<h4>⚡ Никола Тесла</h4>
-<p>
-Никола Тесла нь <b>цахилгаан соронзон орны онол</b>,
-хувьсах гүйдлийн системийг хөгжүүлсэн суут эрдэмтэн юм.
-</p>
-</div>
-
-<!-- Юм нэмэх -->
-<hr>
-<button onclick="show('add')">➕ Юм нэмэх</button>
-
-<div id="add" class="section card">
-<h3>📝 Мэдээлэл илгээх</h3>
-
-<form action="https://battsengel4567" method="GET">
-<input type="text" name="name" placeholder="Таны нэр" required><br><br>
-<input type="text" name="topic" placeholder="Сэдэв" required><br><br>
-<textarea name="content" placeholder="Мэдээлэл" required></textarea><br><br>
-<button type="submit">📨 Илгээх</button>
-</form>
-</div>
-
-<script>
-function show(id){
-  document.querySelectorAll('.section')
-    .forEach(s => s.style.display = "none");
-  document.getElementById(id).style.display = "block";
-}
-</script>
-
+<script src="script.js"></script>
+<script>if(localStorage.getItem("theme")==="light") document.body.classList.add("light");</script>
 </body>
 </html>
