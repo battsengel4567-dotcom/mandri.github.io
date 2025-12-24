@@ -1,39 +1,28 @@
-<!DOCTYPE html>
-<html lang="mn">
-<head>
-    <meta charset="UTF-8">
-    <title>Нийтлэл нэмэх | FutureMind</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <div class="post-item">
-            <h1>✍️ Шинэ нийтлэл</h1>
-            <select id="cat" style="width:100%; padding:10px; margin-bottom:15px; background:#0d1117; color:white; border-radius:5px;">
-                <option value="news">AI & Технологи</option>
-                <option value="tesla">Tesla & Энерги</option>
-                <option value="science">Шинжлэх ухаан</option>
-            </select>
-            <input type="text" id="img" style="width:100%; padding:10px; margin-bottom:15px; background:#0d1117; color:white; border-radius:5px;" placeholder="Зурагны линк">
-            <textarea id="msg" style="width:100%; padding:10px; background:#0d1117; color:white; border-radius:5px;" rows="6" placeholder="Нийтлэх текст..."></textarea>
-            <button onclick="send()" id="btn" style="width:100%; padding:15px; margin-top:15px; background:#238636; color:white; border:none; border-radius:5px; cursor:pointer;">Шууд нийтлэх</button>
-        </div>
-    </div>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
-    <script>
-        async function send() {
-            const btn = document.getElementById('btn');
-            btn.innerText = "Илгээж байна...";
-            const url = "https://script.google.com/macros/s/AKfycbyjWKG3JGL0Lxqm6jCuqUI2Du6SESUKLvXMamjRZ023xh-9iBH-5TWQKROMVlJau9Jp2Q/exec";
-            const data = new URLSearchParams({
-                category: document.getElementById('cat').value,
-                content: document.getElementById('msg').value,
-                media: document.getElementById('img').value
-            });
-            await fetch(url, { method: 'POST', body: data, mode: 'no-cors' });
-            alert("Амжилттай!");
-            window.location.href = "index.html";
-        }
-    </script>
-</body>
-</html>
+<script>
+    const firebaseConfig = { databaseURL: "https://ЧИНИЙ-ТӨСЛИЙН-НЭР.firebaseio.com" };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function savePost() {
+        const category = document.getElementById('category').value;
+        const content = document.getElementById('content').value;
+        const image = document.getElementById('image').value;
+        const date = new Date().toLocaleString();
+
+        if(!content) return alert("Текст бичнэ үү!");
+
+        // Firebase рүү үүрд хадгалахаар илгээх
+        db.ref('posts').push({
+            category: category,
+            content: content,
+            image: image,
+            date: date
+        });
+
+        alert("Нийтлэл үүрд хадгалагдлаа!");
+        window.location.href = "index.html";
+    }
+</script>

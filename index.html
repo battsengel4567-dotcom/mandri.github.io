@@ -2,9 +2,10 @@
 <html lang="mn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FutureMind | Ирээдүйг хамтдаа</title>
+    <title>FutureMind | Eternal Hub</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
     <header>
@@ -16,59 +17,73 @@
 
     <div class="container">
         <div id="home-scene" class="scene active">
-            <h1 style="text-align: center;">Сэдэв сонгоно уу</h1>
+            <h1 style="text-align:center;">Сэдэв сонгоно уу</h1>
             <div class="scene-grid">
-                <div class="scene-card" onclick="loadPosts('news')">🤖 AI Технологи</div>
-                <div class="scene-card" onclick="loadPosts('tesla')">⚡ Tesla Энерги</div>
-                <div class="scene-card" onclick="loadPosts('science')">🔬 Шинжлэх ухаан</div>
-            </div>
-            
-            <div style="margin-top: 40px;">
-                <h2 style="color: #58a6ff;">🔥 Онцлох нийтлэлүүд</h2>
-                <a href="post-ai.html" class="static-card">🧠 Хиймэл оюун ухаан (AI) гэж юу вэ?</a>
-                <a href="post-tesla.html" class="static-card">🏎️ Tesla яагаад дэлхийг өөрчилж байна вэ?</a>
+                <div class="scene-card" onclick="showCategory('news')">🤖 AI Технологи</div>
+                <div class="scene-card" onclick="showCategory('tesla')">⚡ Tesla Энерги</div>
+                <div class="scene-card" onclick="showCategory('science')">🔬 Шинжлэх ухаан</div>
             </div>
         </div>
 
         <div id="list-scene" class="scene">
-            <button class="back-btn" onclick="document.getElementById('list-scene').classList.remove('active'); document.getElementById('home-scene').classList.add('active');">← Буцах</button>
-            <h1 id="category-title" style="color: #58a6ff;"></h1>
-            <div id="posts-container"></div>
+            <button class="back-btn" onclick="location.reload()">← Буцах</button>
+            <h1 id="cat-title"></h1>
+            <div id="spawn-area"></div>
         </div>
     </div>
 
     <script>
-        const scriptURL = "https://script.google.com/macros/s/AKfycbyjWKG3JGL0Lxqm6jCuqUI2Du6SESUKLvXMamjRZ023xh-9iBH-5TWQKROMVlJau9Jp2Q/exec";
+        // 🔥 Firebase-ээ энд тохируулна (Үнэгүй)
+        const firebaseConfig = {
+            databaseURL: "https://ЧИНИЙ-ТӨСЛИЙН-НЭР.firebaseio.com" 
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
-        async function loadPosts(category) {
+        function showCategory(category) {
             document.getElementById('home-scene').classList.remove('active');
-            const listScene = document.getElementById('list-scene');
-            listScene.classList.add('active');
+            document.getElementById('list-scene').classList.add('active');
+            document.getElementById('cat-title').innerText = category.toUpperCase();
             
-            document.getElementById('category-title').innerText = category.toUpperCase();
-            const container = document.getElementById('posts-container');
-            container.innerHTML = "<p>Уншиж байна...</p>";
+            const spawnArea = document.getElementById('spawn-area');
+            
+            // Firebase-ээс мэдээлэл унших
+            db.ref('posts').on('value', (snapshot) => {
+                spawnArea.innerHTML = "";
+                const data = snapshot.val();
+                if (!data) return spawnArea.innerHTML = "Нийтлэл алга.";
 
-            try {
-                const response = await fetch(scriptURL);
-                const data = await response.json();
-                container.innerHTML = "";
-                const filtered = data.filter(row => row[0] === category).reverse();
-
-                if (filtered.length === 0) {
-                    container.innerHTML = "<p>Одоогоор энэ сэдэвт нийтлэл алга.</p>";
-                    return;
-                }
-
-                filtered.forEach(row => {
-                    container.innerHTML += `
-                        <div class="post-item">
-                            <p style="font-size: 18px; line-height: 1.6;">${row[1]}</p>
-                            ${row[2] ? `<img src="${row[2]}" class="post-img">` : ""}
-                        </div>`;
+                Object.keys(data).reverse().forEach(key => {
+                    const post = data[key];
+                    if (post.category === category) {
+                        const card = document.createElement('div');
+                        card.className = 'post-item spawn-anim';
+                        card.innerHTML = `
+                            <div class="post-content">
+                                <p>${post.content}</p>
+                                ${post.image ? `<img src="${post.image}" class="post-img">` : ''}
+                            </div>
+                            <div class="post-footer">
+                                🕒 ${post.date}
+                                <button class="admin-del" onclick="deletePost('${key}')">Устгах (Админ)</button>
+                            </div>
+                        `;
+                        spawnArea.appendChild(card);
+                    }
                 });
-            } catch (e) {
-                container.innerHTML = "<p>Алдаа гарлаа. Дахин ачаална уу.</p>";
+            });
+        }
+
+        // 🛡️ Админ устгах функц
+        function deletePost(postId) {
+            const adminCode = prompt("Админ нууц кодыг оруулна уу:");
+            const SECRET_CODE = "mandri123"; // Энэ чиний устгах нууц код
+
+            if (adminCode === SECRET_CODE) {
+                db.ref('posts/' + postId).remove();
+                alert("Амжилттай устгагдлаа!");
+            } else {
+                alert("Нууц код буруу байна!");
             }
         }
     </script>
