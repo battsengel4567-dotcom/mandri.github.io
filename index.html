@@ -9,46 +9,42 @@
 <body>
     <header>
         <div class="nav-container">
-            <div class="logo" onclick="location.reload()">🚀 FutureMind</div>
-            <nav>
-                <a href="submit.html" class="btn-submit">+ Нийтлэл нэмэх</a>
-            </nav>
+            <a href="index.html" class="logo">🚀 FutureMind</a>
+            <nav><a href="submit.html" class="btn-submit">+ Нийтлэх</a></nav>
         </div>
     </header>
 
     <div class="container">
         <div id="home-scene" class="scene active">
-            <h1 class="center-title">Сэдвээ сонгоно уу</h1>
+            <h1 style="text-align: center;">Сэдэв сонгоно уу</h1>
             <div class="scene-grid">
-                <div class="scene-card" onclick="loadPosts('news')">🤖 AI & Технологи</div>
-                <div class="scene-card" onclick="loadPosts('tesla')">⚡ Tesla & Энерги</div>
+                <div class="scene-card" onclick="loadPosts('news')">🤖 AI Технологи</div>
+                <div class="scene-card" onclick="loadPosts('tesla')">⚡ Tesla Энерги</div>
                 <div class="scene-card" onclick="loadPosts('science')">🔬 Шинжлэх ухаан</div>
             </div>
             
-            <div class="static-links">
-                <h2>Онцлох нийтлэл:</h2>
-                <a href="post-ai.html" class="static-card">🧠 Хиймэл оюун ухаан гэж юу вэ?</a>
+            <div style="margin-top: 40px;">
+                <h2 style="color: #58a6ff;">🔥 Онцлох нийтлэлүүд</h2>
+                <a href="post-ai.html" class="static-card">🧠 Хиймэл оюун ухаан (AI) гэж юу вэ?</a>
                 <a href="post-tesla.html" class="static-card">🏎️ Tesla яагаад дэлхийг өөрчилж байна вэ?</a>
             </div>
         </div>
 
         <div id="list-scene" class="scene">
-            <button class="back-btn" onclick="showScene('home-scene')">← Буцах</button>
-            <h1 id="category-title">Сэдэв</h1>
-            <div id="posts-container" class="post-list"></div>
+            <button class="back-btn" onclick="document.getElementById('list-scene').classList.remove('active'); document.getElementById('home-scene').classList.add('active');">← Буцах</button>
+            <h1 id="category-title" style="color: #58a6ff;"></h1>
+            <div id="posts-container"></div>
         </div>
     </div>
 
     <script>
         const scriptURL = "https://script.google.com/macros/s/AKfycbyjWKG3JGL0Lxqm6jCuqUI2Du6SESUKLvXMamjRZ023xh-9iBH-5TWQKROMVlJau9Jp2Q/exec";
 
-        function showScene(id) {
-            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-
         async function loadPosts(category) {
-            showScene('list-scene');
+            document.getElementById('home-scene').classList.remove('active');
+            const listScene = document.getElementById('list-scene');
+            listScene.classList.add('active');
+            
             document.getElementById('category-title').innerText = category.toUpperCase();
             const container = document.getElementById('posts-container');
             container.innerHTML = "<p>Уншиж байна...</p>";
@@ -60,14 +56,14 @@
                 const filtered = data.filter(row => row[0] === category).reverse();
 
                 if (filtered.length === 0) {
-                    container.innerHTML = "<p>Одоогоор шинэ нийтлэл алга.</p>";
+                    container.innerHTML = "<p>Одоогоор энэ сэдэвт нийтлэл алга.</p>";
                     return;
                 }
 
                 filtered.forEach(row => {
                     container.innerHTML += `
                         <div class="post-item">
-                            <p>${row[1]}</p>
+                            <p style="font-size: 18px; line-height: 1.6;">${row[1]}</p>
                             ${row[2] ? `<img src="${row[2]}" class="post-img">` : ""}
                         </div>`;
                 });
