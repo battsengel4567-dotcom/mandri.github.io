@@ -1,53 +1,39 @@
-<!DOCTYPE html>
-<html lang="mn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Нийтлэл илгээх | Mandri</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <div class="nav-container">
-            <div class="logo">Mandri<span>Blog</span></div>
-            <nav><a href="index.html">Буцах</a></nav>
-        </div>
-    </header>
-
-    <div class="container form-container">
-        <div class="form-card">
-            <h1>✍️ Нийтлэл илгээх</h1>
-            <p>Таны илгээсэн нийтлэлийг бид хянаж үзээд сайт дээрээ нэмэх болно.</p>
-            
-            <form action="https://formspree.io/f/ВАЙН_МЭЙЛ_ХАЯГ" method="POST">
-                <div class="input-group">
-                    <label>Таны нэр</label>
-                    <input type="text" name="author" required placeholder="Нэрээ бичнэ үү">
-                </div>
-
-                <div class="input-group">
-                    <label>Нийтлэлийн гарчиг</label>
-                    <input type="text" name="title" required placeholder="Гарчиг...">
-                </div>
-                
-                <div class="input-group">
-                    <label>Ангилал</label>
-                    <select name="category">
-                        <option value="news">Мэдээ</option>
-                        <option value="recipe">Хоолны Жор</option>
-                        <option value="history">Түүх</option>
-                        <option value="tech">Технологи</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label>Нийтлэлийн агуулга</label>
-                    <textarea name="message" rows="8" required placeholder="Текстээ энд бичнэ үү..."></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn-full">Илгээх (Post It)</button>
-            </form>
-        </div>
+<form id="submissionForm" action="https://formspree.io/f/ЧИНИЙ_ID" method="POST">
+    <div class="input-group">
+        <label>Нийтлэлийн гарчиг</label>
+        <input type="text" name="title" id="postTitle" required placeholder="Гарчиг...">
     </div>
-</body>
-</html>
+
+    <div class="input-group">
+        <label>Нийтлэлийн агуулга</label>
+        <textarea name="content" id="postContent" rows="8" required placeholder="Текстээ энд бичнэ үү..."></textarea>
+    </div>
+
+    <div id="aiStatus" style="display:none; color: #ff4757; margin-bottom: 15px; font-weight: bold;"></div>
+
+    <button type="submit" id="submitBtn" class="submit-btn-full">Нийтлэлийг илгээх</button>
+</form>
+
+<script>
+    const forbiddenWords = ['тэнэг', 'хог', 'spam', 'http', 'www', '.com', 'порно']; // Шүүх үгс
+
+    document.getElementById('submissionForm').addEventListener('submit', function(e) {
+        const title = document.getElementById('postTitle').value.toLowerCase();
+        const content = document.getElementById('postContent').value.toLowerCase();
+        const status = document.getElementById('aiStatus');
+
+        // AI Шүүлтүүр ажиллаж байна
+        let isBad = forbiddenWords.some(word => title.includes(word) || content.includes(word));
+
+        if (isBad) {
+            e.preventDefault(); // Илгээхийг зогсооно
+            status.style.display = 'block';
+            status.innerText = "⚠️ AI Хяналт: Таны бичвэрт зохисгүй үг эсвэл линк илэрсэн тул илгээх боломжгүй!";
+            alert("Зохисгүй агуулга илэрлээ!");
+        } else {
+            status.style.display = 'block';
+            status.style.color = '#2ed573';
+            status.innerText = "✅ AI шалгаж дууслаа. Илгээж байна...";
+        }
+    });
+</script>
