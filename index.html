@@ -3,113 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mandri Hub | Мэдээлэл & Жор & Түүх</title>
+    <title>Mandri Hub</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
         <div class="nav-container">
             <div class="logo">Mandri<span>Hub</span></div>
             <nav>
-                <a href="index.html" class="active">Нүүр</a>
-                <a href="submit.html" class="btn-submit">Нийтлэл илгээх</a>
+                <a href="index.html">Нүүр</a>
+                <a href="submit.html" class="btn-submit">Нийтлэх</a>
             </nav>
         </div>
     </header>
 
     <div class="container">
-        <div class="search-section">
-            <input type="text" id="searchInput" placeholder="Нийтлэл хайх (Гарчиг эсвэл түлхүүр үг)...">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Нийтлэл хайх...">
         </div>
 
-        <div class="filter-wrapper">
-            <button class="filter-btn active" onclick="filterCategory('all')">Бүгд</button>
-            <button class="filter-btn" onclick="filterCategory('recipe')">Хоолны Жор</button>
-            <button class="filter-btn" onclick="filterCategory('history')">Түүх</button>
-            <button class="filter-btn" onclick="filterCategory('news')">Мэдээ</button>
+        <div class="filter-buttons">
+            <button class="f-btn active" onclick="filterData('all')">Бүгд</button>
+            <button class="f-btn" onclick="filterData('recipe')">Хоолны Жор</button>
+            <button class="f-btn" onclick="filterData('history')">Түүх</button>
         </div>
 
-        <main class="post-grid" id="postGrid">
-            <article class="card recipe">
-                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500');"></div>
-                <div class="card-content">
-                    <span class="badge">Хоолны Жор</span>
-                    <h2>Итали пиццаны нууц жор</h2>
-                    <p>Гэртээ ресторан шиг амттай пицца хийхэд ердөө 15 минут хангалттай...</p>
-                    <a href="#full-pizza" class="read-btn">Унших →</a>
-                </div>
-            </article>
+        <main class="grid" id="postGrid">
+            <div class="card recipe">
+                <h2>Итали пиццаны жор</h2>
+                <p>Гэртээ ресторан шиг пицца хийх хамгийн амархан арга...</p>
+                <a href="#pizza-detail" class="go-btn">Унших</a>
+            </div>
 
-            <article class="card history">
-                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1599408162172-66236b28906a?w=500');"></div>
-                <div class="card-content">
-                    <span class="badge">Түүх</span>
-                    <h2>Монгол Өртөөний гайхамшиг</h2>
-                    <p>Эртний Монголын харилцаа холбооны систем дэлхийг хэрхэн холбосон бэ?</p>
-                    <a href="#full-history" class="read-btn">Унших →</a>
-                </div>
-            </article>
-
-            <article class="card news">
-                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500');"></div>
-                <div class="card-content">
-                    <span class="badge">Мэдээ</span>
-                    <h2>Технологийн ирээдүй 2026</h2>
-                    <p>Ирэх жилүүдэд бидний амьдралд гарах хамгийн том технологийн өөрчлөлтүүд.</p>
-                    <a href="#full-tech" class="read-btn">Унших →</a>
-                </div>
-            </article>
+            <div class="card history">
+                <h2>Монгол Өртөөний түүх</h2>
+                <p>Эртний Монголын мэдээлэл дамжуулах супер сүлжээ...</p>
+                <a href="#history-detail" class="go-btn">Унших</a>
+            </div>
         </main>
 
-        <section class="reading-area">
-            <div id="full-pizza" class="detail-content">
-                <h2>🍕 Итали пиццаны дэлгэрэнгүй заавар</h2>
-                <p>Пиццаны гурилыг бэлтгэхдээ бүлээн ус, исгэгч ашиглана. Соусаа хийхдээ шинэхэн улаан лооль болон бага зэрэг чихэр хийвэл ресторан шиг амттай болно. Бяслагаа хамгийн сүүлд нь цацаарай.</p>
-                <a href="#" class="back-to-top">Дээшээ буцах ↑</a>
+        <section class="details">
+            <div id="pizza-detail" class="post-full">
+                <h1>🍕 Итали пиццаны жор</h1>
+                <p>Орц: Гурил, ус, бяслаг, улаан лоолийн соус. Заавар: Гурилаа хөөлгөөд соусаа түрхээд 200 хэмд жигнэнэ.</p>
+                <a href="#">Дээшээ буцах ↑</a>
             </div>
 
-            <div id="full-history" class="detail-content">
-                <h2>📜 Монгол Өртөөний тухай дэлгэрэнгүй</h2>
-                <p>Өртөө бол 13-р зууны үеийн "Интернэт" байсан юм. Мориор мэдээ дамжуулдаг энэхүү систем нь дэлхийн хамгийн хурдан шуудангийн сүлжээ байв. Чингис хаан үүнийг маш нарийн зохион байгуулсан байдаг.</p>
-                <a href="#" class="back-to-top">Дээшээ буцах ↑</a>
-            </div>
-
-            <div id="full-tech" class="detail-content">
-                <h2>🤖 Технологийн дэвшил 2026</h2>
-                <p>Удахгүй роботууд гэр цэвэрлэж, өөрөө жолоодогч машинууд түгээмэл болно. Энэ бүхэн бидний цагийг хэмнэх зорилготой юм. Та өнөөдрөөс шинэ технологид суралцаж эхлээрэй.</p>
-                <a href="#" class="back-to-top">Дээшээ буцах ↑</a>
+            <div id="history-detail" class="post-full">
+                <h1>📜 Монгол Өртөөний түүх</h1>
+                <p>Өртөө бол 13-р зууны хамгийн хурдан шуудан байсан. Мориор мэдээг маш хурдан дамжуулдаг байв.</p>
+                <a href="#">Дээшээ буцах ↑</a>
             </div>
         </section>
     </div>
 
-    <footer>
-        <p>&copy; 2025 Mandri Hub. Бүрэн эрх хуулиар хамгаалагдсан.</p>
-    </footer>
-
     <script>
-        // 🔍 Хайлтын функц
+        // Хайлт хийх
         document.getElementById('searchInput').addEventListener('keyup', function() {
-            let filter = this.value.toLowerCase();
+            let val = this.value.toLowerCase();
             let cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                let title = card.querySelector('h2').innerText.toLowerCase();
-                card.style.display = title.includes(filter) ? "" : "none";
+            cards.forEach(c => {
+                let h2 = c.querySelector('h2').innerText.toLowerCase();
+                c.style.display = h2.includes(val) ? "" : "none";
             });
         });
 
-        // 📂 Ангилал шүүх функц
-        function filterCategory(category) {
+        // Ангилал шүүх
+        function filterData(cat) {
             let cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                if (category === 'all' || card.classList.contains(category)) {
-                    card.style.display = "";
+            cards.forEach(c => {
+                if(cat === 'all' || c.classList.contains(cat)) {
+                    c.style.display = "block";
                 } else {
-                    card.style.display = "none";
+                    c.style.display = "none";
                 }
             });
-            // Товчлуурын идэвхтэй өнгө
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
         }
     </script>
