@@ -1,29 +1,15 @@
-<!DOCTYPE html>
-<html lang="mn">
-<head>
-<meta charset="UTF-8">
-<title>Админ</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="container">
-
 <div id="login">
-<h2>🔐 Админ нэвтрэх</h2>
-<input type="password" id="pass" placeholder="Нууц үг">
-<button onclick="login()">Нэвтрэх</button>
+  <h2>🔐 Админ нэвтрэх</h2>
+  <input type="password" id="pass" placeholder="Нууц үг">
+  <button onclick="login()">Нэвтрэх</button>
 </div>
 
 <div id="panel" style="display:none">
-<h2>➕ Мэдээлэл нэмэх</h2>
-<input id="title" placeholder="Гарчиг"><br>
-<textarea id="text" placeholder="Мэдээлэл"></textarea><br>
-<input type="file" id="img"><br><br>
-<button onclick="save()">💾 Хадгалах</button>
+  <h2>➕ Мэдээлэл нэмэх</h2>
+  <input id="title" placeholder="Гарчиг"><br>
+  <textarea id="text" placeholder="Мэдээлэл"></textarea><br>
+  <input type="file" id="img"><br><br>
+  <button onclick="save()">💾 Хадгалах</button>
 </div>
 
-<button onclick="toggle()">🌙 / ☀️</button>
-</div>
 <script src="script.js"></script>
-</body>
-</html>
